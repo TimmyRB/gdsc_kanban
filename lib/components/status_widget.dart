@@ -75,7 +75,7 @@ class _StatusWidgetState extends State<StatusWidget> {
             ),
           ),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          padding: const EdgeInsets.all(4.0),
           child: AddButton(
             addType: 'Task',
             onPressed: widget.onAddTask,
