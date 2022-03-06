@@ -14,7 +14,7 @@ class TaskController {
             'status_id': statusId,
             'task_assignee': task.assignee,
             'task_description': task.description,
-            'task_duedate': task.dueDate.toLocal().toString(),
+            'task_duedate': task.dueDate.toIso8601String(),
           }
         }));
 

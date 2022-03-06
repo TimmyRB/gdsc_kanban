@@ -218,12 +218,12 @@ class _ProjectPageState extends State<ProjectPage> {
               firstDate: DateTime.now(),
               lastDate: DateTime.now().add(const Duration(days: 365 * 5)),
               onDateSaved: (date) => _dueDate = date,
-              onDateSubmitted: (date) => _dueDate = date,
             ),
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 if (formKey.currentState!.validate()) {
+                  formKey.currentState!.save();
                   _panelController.close();
                   TaskController.createTask(
                           Task(0, _titleController.text,
