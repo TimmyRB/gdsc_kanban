@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:gdsc_kanban/backend/config.dart';
+import 'package:gdsc_kanban/backend/controllers/status_controller.dart';
 import 'package:gdsc_kanban/backend/models/project.dart';
 import 'package:gdsc_kanban/backend/models/status.dart';
 import 'package:gdsc_kanban/backend/models/task.dart';
@@ -47,42 +48,15 @@ class ProjectController {
   static Future<Project> fetchById(int id) async {
     http.Client client = http.Client();
 
-    http.Response projectRes = await client.get(Config.uri('projects/$id'));
-    http.Response statusRes = await client.get(Config.uri('status/$id'));
+    http.Response res = await client.get(Config.uri('projects/$id'));
 
-    if (projectRes.statusCode == 200 && statusRes.statusCode == 200) {
-      var projJson = jsonDecode(projectRes.body);
+    if (res.statusCode == 200) {
+      var json = jsonDecode(res.body);
 
-      List<Status> statuses = [];
-
-      var statusJson = jsonDecode(statusRes.body);
-
-      for (var status in statusJson) {
-        http.Response taskRes =
-            await client.get(Config.uri('tasks/${status['id']}'));
-
-        if (taskRes.statusCode == 200) {
-          var taskJson = jsonDecode(taskRes.body);
-
-          List<Task> tasks = [];
-
-          for (var task in taskJson) {
-            tasks.add(Task.fromJson(task));
-          }
-
-          statuses.add(Status.fromJson(status, tasks));
-        } else {
-          throw Exception('Failed to fetch tasks: ${taskRes.statusCode}');
-        }
-      }
+      List<Status> statuses = await StatusController.getStatuses(json['id']);
 
       client.close();
-      return Project(projJson['id'], projJson['project_title'], statuses);
-    } else if (projectRes.statusCode != 200) {
-      throw Exception('Failed to fetch project: ${projectRes.statusCode}');
-    } else if (statusRes.statusCode != 200) {
-      throw Exception(
-          'Failed to fetch project\'s statuses: ${statusRes.statusCode}');
+      return Project(json['id'], json['project_title'], statuses);
     }
 
     client.close();

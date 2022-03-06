@@ -1,7 +1,9 @@
 import 'dart:convert';
 
 import 'package:gdsc_kanban/backend/config.dart';
+import 'package:gdsc_kanban/backend/controllers/task_controller.dart';
 import 'package:gdsc_kanban/backend/models/status.dart';
+import 'package:gdsc_kanban/backend/models/task.dart';
 import 'package:http/http.dart' as http;
 
 class StatusController {
@@ -26,6 +28,28 @@ class StatusController {
 
     client.close();
     throw Exception('Failed to create status: ${res.statusCode}');
+  }
+
+  static Future<List<Status>> getStatuses(int projectId) async {
+    http.Client client = http.Client();
+    http.Response res = await client.get(Config.uri('status/$projectId'));
+
+    if (res.statusCode == 200) {
+      var json = jsonDecode(res.body);
+
+      List<Status> statuses = [];
+
+      for (var status in json) {
+        List<Task> tasks = await TaskController.getTasks(status['id']);
+        statuses.add(Status.fromJson(status, tasks));
+      }
+
+      client.close();
+      return statuses;
+    }
+
+    client.close();
+    throw Exception('Failed to get statuses: ${res.statusCode}');
   }
 
   static Future<void> deleteStatus(int id) async {

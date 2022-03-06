@@ -29,6 +29,27 @@ class TaskController {
     throw Exception('Failed to create task: ${res.statusCode}');
   }
 
+  static Future<List<Task>> getTasks(int statusId) async {
+    http.Client client = http.Client();
+    http.Response res = await client.get(Config.uri('tasks/$statusId'));
+
+    if (res.statusCode == 200) {
+      var json = jsonDecode(res.body);
+
+      List<Task> tasks = [];
+
+      for (var task in json) {
+        tasks.add(Task.fromJson(task));
+      }
+
+      client.close();
+      return tasks;
+    }
+
+    client.close();
+    throw Exception('Failed to fetch tasks: ${res.statusCode}');
+  }
+
   static Future<void> deleteTask(int id) async {
     http.Client client = http.Client();
     http.Response res = await client.delete(Config.uri('tasks/$id'));
