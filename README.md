@@ -1,16 +1,33 @@
 # gdsc_kanban
 
-A new Flutter project.
+A Flutter project showcasing how a backend API can be integrated with a frontend.
+For Sheridan's Google Developer Student Club
+
+## Build Targets
+
+- iOS (Tested on iOS 15.2)
+- Android (Tested on API 30)
+- Web (Tested on Chrome 99.0.4844.51)
+- Windows (Tested on Windows 10 19044.1526)
+- MacOS (Tested on MacOS 12.1)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Clone the repo & navigate to it
 
-A few resources to get you started if this is your first Flutter project:
+```
+git clone https://github.com/TimmyRB/gdsc_kanban
+cd gdsc_kanban
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Install dependancies
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+flutter pub get
+```
+
+Run the project
+
+```
+flutter run
+```
