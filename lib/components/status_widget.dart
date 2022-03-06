@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:gdsc_kanban/backend/controllers/task_controller.dart';
 import 'package:gdsc_kanban/backend/models/status.dart';
 import 'package:gdsc_kanban/components/add_button.dart';
@@ -7,11 +8,13 @@ class StatusWidget extends StatefulWidget {
   final Status status;
   final Function()? onDelete;
   final Function(int) onOrderChange;
+  final Function()? onAddTask;
 
   const StatusWidget(
       {Key? key,
       required this.status,
       this.onDelete,
+      this.onAddTask,
       required this.onOrderChange})
       : super(key: key);
 
@@ -51,11 +54,15 @@ class _StatusWidgetState extends State<StatusWidget> {
           textColor: Colors.white,
           iconColor: Colors.white,
         ),
+        const SizedBox(height: 8.0),
         for (var task in widget.status.tasks)
           ListTile(
-            title: Text(task.description),
+            title: Text(
+              task.description,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
             subtitle: Text(
-                'Assigned: ${task.assignee}, Due: ${task.dueDate.toString()}'),
+                'Assigned: ${task.assignee}\nDue: ${DateFormat('MMMM d, yyyy').format(task.dueDate)}'),
             trailing: IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () => TaskController.deleteTask(task.id).then(
@@ -71,7 +78,7 @@ class _StatusWidgetState extends State<StatusWidget> {
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
           child: AddButton(
             addType: 'Task',
-            onPressed: () {},
+            onPressed: widget.onAddTask,
           ),
         ),
       ]),

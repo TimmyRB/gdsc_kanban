@@ -26,14 +26,14 @@ class _HomePageState extends State<HomePage> {
         panel: Container(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               TextField(
                 controller: _textController,
                 decoration: const InputDecoration(
-                  hintText: 'Project Title',
+                  labelText: 'Project Title',
                 ),
               ),
+              const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
                   _panelController.close();
@@ -91,12 +91,12 @@ class _HomePageState extends State<HomePage> {
                       ),
                     );
                   } else {
-                    return SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) => const ListTile(
-                          title: Text('Loading Projects...'),
+                    return SliverToBoxAdapter(
+                      child: Center(
+                        child: Container(
+                          padding: const EdgeInsets.all(16.0),
+                          child: const CircularProgressIndicator.adaptive(),
                         ),
-                        childCount: 1,
                       ),
                     );
                   }
