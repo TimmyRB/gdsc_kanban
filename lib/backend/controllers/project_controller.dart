@@ -4,7 +4,6 @@ import 'package:gdsc_kanban/backend/config.dart';
 import 'package:gdsc_kanban/backend/controllers/status_controller.dart';
 import 'package:gdsc_kanban/backend/models/project.dart';
 import 'package:gdsc_kanban/backend/models/status.dart';
-import 'package:gdsc_kanban/backend/models/task.dart';
 import 'package:http/http.dart' as http;
 
 class ProjectController {

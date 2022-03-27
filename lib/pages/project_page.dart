@@ -10,11 +10,6 @@ import 'package:gdsc_kanban/components/add_button.dart';
 import 'package:gdsc_kanban/components/status_widget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-enum PanelType {
-  add_status,
-  add_task,
-}
-
 class ProjectPage extends StatefulWidget {
   const ProjectPage({Key? key, required this.project}) : super(key: key);
 

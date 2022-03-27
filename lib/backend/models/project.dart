@@ -2,20 +2,14 @@ import 'package:gdsc_kanban/backend/models/status.dart';
 
 class Project {
   final int id;
-  String _title;
+  final String title;
   final List<Status> statuses;
 
-  Project(this.id, this._title, this.statuses);
+  Project(this.id, this.title, this.statuses);
 
   Project.fromJson(Map<String, dynamic> json, this.statuses)
       : id = json['id'],
-        _title = json['project_title'];
-
-  String get title => _title;
-
-  set title(String value) {
-    _title = value;
-  }
+        title = json['project_title'];
 
   @override
   String toString() {
